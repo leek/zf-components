@@ -1,0 +1,24 @@
+<?php $e = $this->exception; ?>
+<?php $this->headLink()->appendStylesheet('/css/error/styles.css'); ?>
+
+<div class="wrap">
+    <h1><?php echo $this->message; ?></h1>
+
+    <?php if ($this->code == 500): ?>
+        <h2>What happened?</h2>
+        <p><b><?php echo get_class($e); ?></b> was thrown with the message "<b><?php echo $e->getMessage(); ?></b>".</p>
+        <br>
+        <h2>Where did this happen?</h2>
+        <ul class="stack">
+            <?php echo $this->lineFormatted; ?>
+        </ul>
+        <br>
+        <h2>Stack Trace (Formatted)</h2>
+        <ul class="stack">
+            <?php echo $this->traceFormatted; ?>
+        </ul>
+        <br>
+        <h3>Stack Trace (Text)</h3>
+        <p class="plain"><?php echo $this->traceText; ?></p>
+    <?php endif; ?>
+</div>
