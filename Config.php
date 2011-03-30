@@ -21,7 +21,8 @@
  */
 class Leek_Config
 {
-    const REGISTRY_PREFIX = 'Zend_Config-';
+    const DEFAULT_CACHE_MANAGER_KEY = 'config';
+    const REGISTRY_PREFIX           = 'Leek_Config-';
 
     /**
     * Transforms input string by replacing parameters in the
@@ -105,15 +106,16 @@ class Leek_Config
             return $config;
         }
 
-        $config = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('config');
+        $frontController = Zend_Controller_Front::getInstance();
+        $config = $frontController->getParam('bootstrap')->getResource('config');
         $config = isset($config[$key]) ? $config[$key] : false;
 
         if ($config) {
-
-            if ($config['cache']) {
-
-                $cache    = Leek_MultiCache::getCache($config['cacheKey']);
-                $cacheKey = APPLICATION_ENVIRONMENT . md5_file($config['path']);
+            if ($config['cacheKey']) {
+                // Use Cache and Load
+                $manager  = $frontController->getParam('bootstrap')->getResource('cachemanager');
+                $cache    = $manager->getCache($config['cacheManagerKey']);
+                $cacheKey = md5(APPLICATION_ENVIRONMENT . $config['path'] . filemtime($config['path']));
 
                 if (!$configResult = $cache->load($cacheKey)) {
                     $configResult = self::loadConfig($config['path'], $config['environment']);
@@ -123,15 +125,14 @@ class Leek_Config
                 $config = $configResult;
 
             } else {
-
+                // Load
                 $config = self::loadConfig($config['path'], $config['environment']);
-
             }
 
             self::setRegistryConfig($key, $config);
             return $config;
         }
-        
+
         return false;
     }
 
@@ -157,7 +158,6 @@ class Leek_Config
                     $config = new Zend_Config_Ini($file);
                 }
                 break;
-
             case 'xml':
                 if (!empty($environment)) {
                     $config = new Zend_Config_Xml($file, $environment);
@@ -165,7 +165,6 @@ class Leek_Config
                     $config = new Zend_Config_Xml($file);
                 }
                 break;
-
             case 'php':
             case 'inc':
                 $config = include $file;

@@ -47,14 +47,16 @@ class Leek_Application_Resource_Config extends Zend_Application_Resource_Resourc
             if (isset($options['path'])) {
 
                 $environment = isset($options['useenvironment']) && $options['useenvironment'] ? $this->getBootstrap()->getEnvironment() : null;
-                $cache       = isset($options['useconfigcache']) ? (bool) $options['useconfigcache'] : false;
-                $cacheKey    = isset($options['configcachekey']) && !empty($options['configcachekey']) ? $options['configcachekey'] : 'config';
+                $cache       = isset($options['usecache']) ? (bool) $options['usecache'] : false;
+                $cacheKey    = isset($options['cachekey']) && !empty($options['cachekey']) ? $options['cachekey'] : 'config';
+                $managerKey  = isset($options['cachemanagerkey']) && !empty($options['cachemanagerkey']) ? $options['cachemanagerkey'] : Leek_Config::DEFAULT_CACHE_MANAGER_KEY;isset($options['cachemanagerkey']);
 
                 $this->_configs[$key] = array(
-                    'path'        => $options['path'],
-                    'environment' => $environment,
-                    'cache'       => $cache,
-                    'cacheKey'    => $cacheKey,
+                    'path'            => $options['path'],
+                    'environment'     => $environment,
+                    'cache'           => $cache,
+                    'cacheKey'        => $cacheKey,
+                    'cacheManagerKey' => $managerKey,
                 );
 
             }
@@ -62,14 +64,15 @@ class Leek_Application_Resource_Config extends Zend_Application_Resource_Resourc
         } else {
 
             $this->_configs[$key] = array(
-                'path'        => $filePath,
-                'environment' => null,
-                'cache'       => false,
-                'cacheKey'    => null,
+                'path'            => $filePath,
+                'environment'     => null,
+                'cache'           => false,
+                'cacheKey'        => null,
+                'cacheManagerKey' => null,
             );
 
         }
-       
+
         return $this;
     }
 

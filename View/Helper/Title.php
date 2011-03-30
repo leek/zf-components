@@ -31,7 +31,30 @@ class Leek_View_Helper_Title extends Zend_View_Helper_Abstract
      */
     public function title()
     {
-        $headTitle = $this->view->headTitle();
-        return strip_tags($headTitle->toString());
+        $headTitle = $this->view->headTitle()->toString();
+
+        // Remove <title> Tag
+        $headTitle = str_replace('<title>', '', $headTitle);
+        $headTitle = str_replace('</title>', '', $headTitle);
+
+        // Remove and prefixes/seperators
+        $bootstrap = Zend_Controller_Front::getInstance()->getParam('bootstrap');
+        $options   = $bootstrap->getOptions();
+        if (isset($options['resources']['view']['headTitle'])) {
+            $headTitleOptions = $options['resources']['view']['headTitle'];
+            foreach ($headTitleOptions as $option => $value) {
+                switch ($option) {
+                    case 'title':
+                    case 'seperator':
+                        $headTitle = str_replace($value, '', $headTitle);
+                        break;
+                    default:
+                        $headTitle = str_replace($option, '', $headTitle);
+                        break;
+                }
+            }
+        }
+
+        return $headTitle;
     }
 }
