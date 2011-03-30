@@ -40,13 +40,6 @@ class Leek_Application_Resource_View extends Zend_Application_Resource_View
             switch (strtolower($key)) {
 
                 //
-                // Setup doctype
-                //
-                case 'doctype':
-                    $view->doctype($value);
-                    break;
-
-                //
                 // Setup <TITLE>
                 //
                 case 'headtitle':
