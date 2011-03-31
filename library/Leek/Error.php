@@ -14,6 +14,13 @@ class Leek_Error
     const SHOW_LINES = 3;
 
     /**
+     * @var array
+     */
+    protected $_ignorePaths = array(
+        '\Zend\\',
+    );
+
+    /**
      * @var Exception
      */
     protected $_exception  = null;
@@ -138,9 +145,11 @@ class Leek_Error
             return $html;
         }
 
-        // Special handling for ZF files
-        if (strpos($file, '\Zend\\')) {
-            return $html;
+        // Special handling of misc. paths
+        foreach ($this->_ignorePaths as $path) {
+            if (strpos($file, $path)) {
+                return $html;
+            }
         }
 
         $fp = fopen($file, 'r');
@@ -225,7 +234,7 @@ class Leek_Error
         if (empty($defaults->string)) {
             $defaults->string = '#DD0000';
         }
-        
+
         if (empty($defaults->comment)) {
             $defaults->comment = '#FF8800';
         }
@@ -255,7 +264,7 @@ class Leek_Error
             'class="php-default"',
             'class="php-html"'
         ), $string);
-        
+
         return $string;
     }
 }

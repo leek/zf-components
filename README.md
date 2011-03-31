@@ -13,4 +13,4 @@ See [this image](http://i.imgur.com/lFjwF.jpg) for a reference of what this erro
 
 * To create libonly/master:
 
- `git subtree split --prefix=library/Leek -b libonly/master`
+    git subtree split --prefix=library/Leek -b libonly/master
