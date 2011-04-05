@@ -34,15 +34,16 @@ class Leek_View_Helper_HeadPaginator extends Zend_View_Helper_Abstract
                 echo $this->view->headLink(array(
                     'rel' => 'prev',
                     'href' => $this->view->url(array('page' => $paginator->getPages()->prev)),
-                ), 'APPEND') . "\n";
+                ), 'APPEND') . PHP_EOL;
             }
 
             if (isset($paginator->getPages()->next)) {
                 echo $this->view->headLink(array(
                     'rel' => 'next',
                     'href' => $this->view->url(array('page' => $paginator->getPages()->next)),
-                ), 'APPEND') . "\n";
+                ), 'APPEND') . PHP_EOL;
             }
+
         }
     }
 }
