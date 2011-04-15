@@ -30,6 +30,29 @@ Once you have this setup, you can do this anywhere to get your Zend_Config array
 
     $config = Leek_Config::getBootstrapConfig('navigation')
 
+## Leek_Captcha_ImageGrid
+
+A Zend Framework implementation of the GridImage CAPTCHA style. See [this image](http://i.imgur.com/9IUFg.png) for a reference of what this CAPTCHA adapter could look like.
+
+#### Example Controller Usage
+
+    $captcha = new Leek_Captcha_ImageGrid(array('salt' => 'CHANGE_ME'));
+
+    if ($this->_request->isPost()) {
+        $formData = $this->_request->getPost();          
+        if ($captcha->isValid($formData)) {
+            // ...
+        }
+    } else {
+        $captcha->generate();
+    }
+
+    $this->view->captcha = $captcha;
+
+#### Example ViewScript Usage
+
+    $this->captcha->render($this);
+
 ## Leek_Error
 
 This is a fork of [FFFUU-Exception](https://github.com/kurtschwarz/FFFUU-Exception) error handler by [kurtschwarz](https://github.com/kurtschwarz). I loved the design but wanted something that could easily drop in to any of my Zend Framework projects (and wasn't NSFW) - so here it is. See [this image](http://i.imgur.com/lFjwF.jpg) for a reference of what this error handler looks like.
