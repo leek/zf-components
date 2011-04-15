@@ -32,7 +32,7 @@ Once you have this setup, you can do this anywhere to get your Zend_Config array
 
 ## Leek_Captcha_ImageGrid
 
-A Zend Framework implementation of the GridImage CAPTCHA style. See [this image](http://i.imgur.com/9IUFg.png) for a reference of what this CAPTCHA adapter could look like.
+A Zend Framework implementation of [Image Recognition CAPTCHA](http://www.eecs.berkeley.edu/Pubs/TechRpts/2004/5256.html) (similar to [ASIRRA](http://research.microsoft.com/en-us/um/redmond/projects/asirra/), [PIX](http://www.captcha.net/captchas/pix/), etc.). See [this image](http://i.imgur.com/9IUFg.png) for a reference of what this CAPTCHA adapter could look like.
 
 #### Example Controller Usage
 
