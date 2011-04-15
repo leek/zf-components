@@ -1,0 +1,30 @@
+<?php
+/* @var $grid Leek_Captcha_ImageGrid */
+$grid = &$this->imageGrid;
+?>
+
+<p>
+    <input type="hidden" name="id" value="<?php echo $grid->getId(); ?>">
+    To confirm you're human, please select
+    <br>
+    <strong>
+        <?php echo $grid->getTargetNumber(); ?>
+        <?php echo $grid->getValidCategoryName(); ?>
+    </strong>
+    from the images below:
+</p>
+
+<ul id="catlist">
+    <?php $i = 0; ?>
+    <?php for ($x = 0; $x < $grid->getGridX(); $x++): ?>
+        <?php for ($y = 0; $y < $grid->getGridY(); $y++): ?>
+            <li<?php echo ($y == $grid->getGridY() - 1) ? ' class="last"' : null; ?>>
+                <label>
+                    <img src="<?php echo $grid->getImgUrlFromGridItem($i); ?>">
+                    <input type="checkbox" name="input[]" value="<?php echo $i; ?>">
+                </label>
+            </li>
+            <?php $i++; ?>
+        <?php endfor; ?>
+    <?php endfor; ?>
+</ul>
