@@ -26,7 +26,22 @@ class Leek_View_Helper_Navigation_Config extends Zend_View_Helper_Abstract
     {
         $config    = Leek_Config::getBootstrapConfig('navigation');
         $container = new Zend_Navigation($config[$name]);
-
-        return $this->view->partial('navigation.phtml', 'default', array('name' => $name, 'container' => $container));
+        
+        // Define a page with URI='meta' to add list level properties
+        $meta = false;
+        foreach ($container->getPages() as $page) {
+            /* @var $page Zend_Navigation_Page */
+            if ($page->uri == 'meta') {
+                $page->visible = false;
+                $meta = $page;
+                break;
+            }
+        }
+        
+        return $this->view->partial('navigation.phtml', 'default', array(
+            'name'      => $name,
+            'meta'      => $meta,
+            'container' => $container
+        ));
     }
 }
