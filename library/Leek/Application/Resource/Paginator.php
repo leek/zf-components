@@ -49,6 +49,21 @@ class Leek_Application_Resource_Paginator extends Zend_Application_Resource_Reso
         Zend_View_Helper_PaginationControl::setDefaultViewPartial($viewPartial);
         return $this;
     }
+    
+    /**
+     * Adds Adapter Prefix Paths to Zend_Paginator
+     * 
+     * @uses   Zend_Paginator
+     * @param  array $adapterPrefix 
+     * @return Leek_Application_Resource_Paginator
+     */
+    public function setAdapterPrefixPath($adapterPrefix)
+    {
+        foreach ($adapterPrefix as $prefix => $path) {
+            Zend_Paginator::addAdapterPrefixPath($prefix, $path);
+        }
+        return $this;
+    }
 
     /**
      * Defined by Zend_Application_Resource_Resource
