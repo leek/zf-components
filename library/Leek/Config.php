@@ -22,7 +22,7 @@
 class Leek_Config
 {
     const DEFAULT_CACHE_MANAGER_KEY = 'config';
-    const REGISTRY_PREFIX           = 'Leek_Config-';
+    const REGISTRY_PREFIX           = 'Leek_Config::';
 
     /**
     * Transforms input string by replacing parameters in the
@@ -116,7 +116,7 @@ class Leek_Config
                 $manager  = $frontController->getParam('bootstrap')->getResource('cachemanager');
                 $cache    = $manager->getCache($config['cacheManagerKey']);
                 $cacheKey = md5(APPLICATION_ENVIRONMENT . $config['path'] . filemtime($config['path']));
-
+                
                 if (!$configResult = $cache->load($cacheKey)) {
                     $configResult = self::loadConfig($config['path'], $config['environment']);
                     $cache->save($configResult, $cacheKey);

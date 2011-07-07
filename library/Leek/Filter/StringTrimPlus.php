@@ -24,12 +24,13 @@ class Leek_Filter_StringTrimPlus implements Zend_Filter_Interface
 {
     /**
      * @param string $value
+     * @param mixed $replace
      * @return string
      */
-    public function filter($value)
+    public function filter($value, $replace = ' ')
     {
         $value = (string) $value;
-        $value = trim(preg_replace('/\s+/', ' ', $value));
+        $value = trim(preg_replace('/\s+/', $replace, $value));
         return $value;
     }
 }

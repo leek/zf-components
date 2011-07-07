@@ -104,6 +104,23 @@ class Leek_Form extends Zend_Filter_Input
     }
 
     /**
+     * @return array
+     */
+    public function getErrorMessages()
+    {
+        if (!$this->_processed) {
+            return false;
+        }
+        
+        $messages = array();
+        foreach ($this->getInvalid() as $field => $message) {
+            $messages[$field] = $this->getErrorMessage($field);
+        }
+        
+        return $messages;
+    }
+    
+    /**
      * Return the error message for a given field
      *
      * @param string $field
@@ -132,6 +149,10 @@ class Leek_Form extends Zend_Filter_Input
         return false;
     }
 
+    /**
+     * @param string $field
+     * @return mixed
+     */
     public function getValue($field)
     {
         if (!$this->_processed) {
@@ -139,7 +160,8 @@ class Leek_Form extends Zend_Filter_Input
                 return $this->_validatorRules[$field]['default'];
             }
         }
-
-        return $this->getEscaped($field);
+        
+        $values = $this->getValues();
+        return isset($values[$field]) ? $values[$field] : false;
     }
 }

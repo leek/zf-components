@@ -11,7 +11,6 @@
  * @author     Martin Hujer <mhujer@gmail.com>
  * @author     Chris Jones <leeked@gmail.com>
  * @see        http://code.google.com/p/zfdev/
- * @link       http://code.google.com/p/leek-zf-components/
  * @license    http://www.opensource.org/licenses/bsd-license.php New BSD License
  * @version    $Id: Email.php 52 2009-06-02 22:11:31Z leeked $
  */
@@ -26,7 +25,6 @@
  * @author     Martin Hujer <mhujer@gmail.com>
  * @author     Chris Jones <leeked@gmail.com>
  * @see        http://code.google.com/p/zfdev/
- * @link       http://code.google.com/p/leek-zf-components/
  * @license    http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 class Leek_View_Helper_Email extends Zend_View_Helper_Abstract
