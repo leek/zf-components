@@ -1,6 +1,49 @@
 # Zend Framework Components by leek ![Project status](http://stillmaintained.com/leek/zf-components.png)
 Collection of various helpers and extensions to the Zend Framework project.
 
+## Leek_Multidb
+
+Maybe I'm just using it wrong (quite possible) but what's the point of the `Zend_Application_Resource_Multidb` if I can't realistically use multiple adapters? `Leek_Multidb` aims to automate the process of writing to a master and reading from slaves using what is already built into the Zend Framework so that the integration is as seamless as possible.
+
+#### Step #1
+
+Setup the Multidb Resource as you always would, except add the `<read>` or `<write>` parameters as shown below:
+
+    ...
+    <resources>
+        ...
+        <multidb>
+            <master>
+                <adapter>mysqli</adapter>
+                <host>master-host</host>
+                <port>3306</port>
+                <username>root</username>
+                <password></password>
+                <dbname>database</dbname>
+                <profiler>true</profiler>
+                <charset>utf8</charset>
+                <read>false</read>
+            </master>
+            <slave1>
+                <adapter>mysqli</adapter>
+                <host>slave1-host</host>
+                <port>3306</port>
+                <username>root</username>
+                <password></password>
+                <dbname>database</dbname>
+                <profiler>true</profiler>
+                <charset>utf8</charset>
+                <write>false</write>
+            </slave1>
+        </multidb>
+        ...
+    </resources>
+    ...
+
+#### Step #2
+
+The last step is just as simple - anywhere that you extend `Zend_Db_Table_Abstract`, just extend `Leek_Multidb_Table_Abstract` instead. Also, for `Zend_Db_Table_Row_Abstract`, extend `Leek_Multidb_Table_Row_Abstract` instead. `Leek_Multidb` will automatically swap between writers and readers depending on what type of operation you're doing.
+
 ## Leek_Config / Leek_Application_Resource_Config
 
 Load as many config files as you'd like (of any type) in your Application config file.
@@ -17,6 +60,7 @@ Example (application.xml):
                 <cacheManagerKey>config</cacheManagerKey>
             </navigation>
         </config>
+        ...
     </resources>
     ...
 
